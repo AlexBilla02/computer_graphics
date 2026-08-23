@@ -1,0 +1,13 @@
+# Copia questo file, sostituisci i percorsi e avvialo con:
+# python3 test_runner.py mio_test.yaml
+#
+# Per il cloning, x e y sono il centro della maschera nella destinazione,
+# esattamente i valori mostrati dalla GUI dopo il clic sulla destinazione.
+name: recolor
+operation: recolor
+
+destination: img/recolorization.jpg
+mask: mask/mask_bird.png
+
+color_factors: [1, 0.1, 0.25]
+output: results/res_recolor.png

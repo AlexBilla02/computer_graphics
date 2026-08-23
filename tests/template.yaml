@@ -1,0 +1,10 @@
+name: seam1
+operation: clone
+source: img/sorgente.png
+destination: img/destinazione.png
+mask: mask/maschera_sorgente.png
+position:
+  x: 250
+  y: 180
+guidance: import
+output: results/seam1.png

@@ -1,0 +1,15 @@
+# Copia questo file, sostituisci i percorsi e avvialo con:
+# python3 test_runner.py mio_test.yaml
+#
+# Per il cloning, x e y sono il centro della maschera nella destinazione,
+# esattamente i valori mostrati dalla GUI dopo il clic sulla destinazione.
+name: peng_seam
+operation: clone
+source: img/pengwin.jpg
+destination: img/sfondo_peng.jpg
+mask: mask/mask_peng.png
+position:
+  x: 905
+  y: 650
+guidance: import 
+output: results/res_peng_seamless.png

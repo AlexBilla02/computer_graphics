@@ -1,0 +1,12 @@
+# Copia questo file, sostituisci i percorsi e avvialo con:
+# python3 test_runner.py mio_test.yaml
+#
+# Per il cloning, x e y sono il centro della maschera nella destinazione,
+# esattamente i valori mostrati dalla GUI dopo il clic sulla destinazione.
+name: tile
+operation: tile
+
+destination: img/tile2.jpg
+mask: mask/mask_tiling2.png
+
+output: results/res_tiling2.png

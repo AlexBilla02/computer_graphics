@@ -1,0 +1,15 @@
+# Copia questo file, sostituisci i percorsi e avvialo con:
+# python3 test_runner.py mio_test.yaml
+#
+# Per il cloning, x e y sono il centro della maschera nella destinazione,
+# esattamente i valori mostrati dalla GUI dopo il clic sulla destinazione.
+name: balloon_near
+operation: clone
+source: img/balloon.jpg
+destination: img/mountain.jpg
+mask: mask/mask_balloon.png
+position:
+  x: 1396
+  y: 1017
+guidance: import 
+output: results/res_balloon_seamless_near.png

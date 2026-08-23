@@ -1,0 +1,15 @@
+# Copia questo file, sostituisci i percorsi e avvialo con:
+# python3 test_runner.py mio_test.yaml
+#
+# Per il cloning, x e y sono il centro della maschera nella destinazione,
+# esattamente i valori mostrati dalla GUI dopo il clic sulla destinazione.
+name: neo
+operation: clone
+source: img/faccia_neo.jpg
+destination: img/faccia_neo.jpg
+mask: mask/mask_neo.png
+position:
+  x: 1148
+  y: 742
+guidance: import 
+output: results/res_neo.png

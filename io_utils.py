@@ -50,6 +50,19 @@ def save_image(path, array):
     Image.fromarray(array_uint8, mode="RGB").save(path)
 
 
+def save_mask(path, mask):
+    """Salva una maschera booleana come PNG bianco/nero.
+
+    Bianco indica i pixel dentro Omega e nero quelli esterni, la stessa
+    convenzione usata da :func:`load_mask`. Il file risultante e' quindi
+    riutilizzabile sia dalla CLI sia dai test YAML.
+    """
+    if mask.ndim != 2:
+        raise ValueError("La maschera deve avere shape (H, W).")
+    pixels = np.where(mask, 255, 0).astype(np.uint8)
+    Image.fromarray(pixels, mode="L").save(path)
+
+
 def load_mask(path, threshold=0.5):
     """
     Carica una maschera da un'immagine in scala di grigi.

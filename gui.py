@@ -57,6 +57,10 @@ class PoissonEditingApp:
         ttk.Button(toolbar, text="Apri destinazione", command=self.open_destination).pack(side="left", padx=(6, 0))
         ttk.Button(toolbar, text="Chiudi selezione (Invio)", command=self.finish_selection).pack(side="left", padx=(16, 0))
         ttk.Button(toolbar, text="Cancella selezione", command=self.clear_selection).pack(side="left", padx=(6, 0))
+        ttk.Button(toolbar, text="Esporta maschera", command=self.export_mask).pack(side="left", padx=(6, 0))
+        self.select_all_button = ttk.Button(
+            toolbar, text="Seleziona tutta l'immagine", command=self.select_all_for_tiling
+        )
 
         controls = ttk.Frame(root, padding=(8, 0, 8, 8))
         controls.pack(fill="x")
@@ -116,6 +120,10 @@ class PoissonEditingApp:
         return self.mode == "clone"
 
     def _refresh_panel_titles(self) -> None:
+        if self.mode == "tile":
+            self.select_all_button.pack(side="left", padx=(6, 0))
+        else:
+            self.select_all_button.pack_forget()
         if self.is_clone_mode:
             self.source_frame.configure(text="1. Sorgente: clic per disegnare il contorno")
             self.destination_frame.configure(text="2. Destinazione: clic per scegliere il centro")
@@ -298,6 +306,40 @@ class PoissonEditingApp:
         self._show_source()
         self._show_destination()
 
+    def select_all_for_tiling(self) -> None:
+        """Seleziona l'intera destinazione per il seamless tiling."""
+        if self.mode != "tile":
+            return
+        if self.destination is None:
+            self.status.set("Prima carica una destinazione.")
+            return
+        self.mask = np.ones(self.destination.shape[:2], dtype=bool)
+        self.points.clear()
+        self.offset = None
+        self._show_destination()
+        self.status.set(
+            "Selezionata tutta l'immagine. Puoi eseguire il seamless tiling."
+        )
+
+    def export_mask(self) -> None:
+        """Esporta la selezione corrente come PNG bianco/nero riusabile."""
+        if self.mask is None:
+            self.status.set("Prima completa una selezione da esportare.")
+            return
+        mask_directory = Path.cwd() / "mask"
+        mask_directory.mkdir(exist_ok=True)
+        path = filedialog.asksaveasfilename(
+            title="Esporta la maschera",
+            initialdir=mask_directory,
+            initialfile="mask.png",
+            defaultextension=".png",
+            filetypes=[("PNG", "*.png")],
+        )
+        if not path:
+            return
+        io_utils.save_mask(path, self.mask)
+        self.status.set(f"Maschera esportata in: {path}")
+
     def set_destination_position(self, event: tk.Event) -> None:
         if self.destination is None or self.mask is None:
             self.status.set("Prima carica la destinazione e completa la selezione sulla sorgente.")
@@ -306,7 +348,11 @@ class PoissonEditingApp:
         ys, xs = np.nonzero(self.mask)
         self.offset = (round(center_y - (ys.min() + ys.max()) / 2), round(center_x - (xs.min() + xs.max()) / 2))
         self._show_destination()
-        self.status.set("Posizione scelta. Premi 'Esegui e salva'.")
+        top, left = self.offset
+        self.status.set(
+            f"Posizione scelta: x={center_x}, y={center_y} "
+            f"(offset: top={top}, left={left}). Premi 'Esegui e salva'."
+        )
 
     def _parameters(self) -> tuple[float, float, float, tuple[float, float, float]]:
         try:

@@ -1,0 +1,15 @@
+# Copia questo file, sostituisci i percorsi e avvialo con:
+# python3 test_runner.py mio_test.yaml
+#
+# Per il cloning, x e y sono il centro della maschera nella destinazione,
+# esattamente i valori mostrati dalla GUI dopo il clic sulla destinazione.
+name: rainbow
+operation: clone
+source: img/rainbow.jpg
+destination: img/tree.jpg
+mask: mask/mask_rainbow.png
+position:
+  x: 964
+  y: 868
+guidance: mixing 
+output: results/res_rainbow_mixing.png

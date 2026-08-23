@@ -1,0 +1,13 @@
+# Copia questo file, sostituisci i percorsi e avvialo con:
+# python3 test_runner.py mio_test.yaml
+#
+# Per il cloning, x e y sono il centro della maschera nella destinazione,
+# esattamente i valori mostrati dalla GUI dopo il clic sulla destinazione.
+name: flatten
+operation: texture-flatten
+
+destination: img/lentiggini.jpg
+mask: mask/mask_flattening.png
+
+edge_threshold: 0.05
+output: results/res_flatten.png
